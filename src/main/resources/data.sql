@@ -1,0 +1,1 @@
+insert into `users` (name, lastname, age, email) values('David', 'Bernal', 31, 'leo.bernal1946@gmail.com');
