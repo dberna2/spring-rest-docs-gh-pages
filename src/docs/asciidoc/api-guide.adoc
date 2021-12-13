@@ -1,0 +1,15 @@
+= Guide API REST User Service
+User API
+:doctype: book
+:idprefix:
+:idseparator: -
+:toc: left
+:toclevels: 4
+:tabsize: 4
+:numbered:
+:sectanchors:
+:sectnums:
+:hide-uri-scheme:
+:docinfo: shared,private
+
+NOTE: This document contains the REST API documentation to consume the user service
