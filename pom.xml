@@ -70,6 +70,11 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-webtestclient</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -103,6 +108,35 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>${asciidoctor-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<backend>spring-html</backend>
+							<attributes>
+								<snippets>${snippetsDirectory}</snippets>
+								<project-version>${project.version}</project-version>
+							</attributes>
+							<sourceDirectory>src/docs/asciidoc</sourceDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>io.spring.asciidoctor.backends</groupId>
+						<artifactId>spring-asciidoctor-backends</artifactId>
+						<version>${spring-asciidoctor-backends.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
