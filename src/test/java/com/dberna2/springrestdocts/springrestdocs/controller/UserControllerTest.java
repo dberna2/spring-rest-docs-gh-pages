@@ -26,8 +26,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -140,7 +139,19 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUserById() {
+    void deleteUserById() throws Exception {
+
+        ConstrainedFields constrainedFields = new ConstrainedFields(AccountDto.class);
+
+        ParameterDescriptor userPathParameterDescriptor =
+                this.userPathParameterDescriptor(constrainedFields);
+
+        this.mockMvc.perform(delete("/users/{id}", 1)
+                        .contentType(APPLICATION_JSON))
+                .andDo(document("delete-user-by-id",
+                        pathParameters(userPathParameterDescriptor))
+                )
+                .andExpect(status().isAccepted());
     }
 
     private List<FieldDescriptor> requestCreateUserFieldDescriptor(ConstrainedFields fields) {
