@@ -135,7 +135,23 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers() {
+    void getAllUsers() throws Exception {
+        ConstrainedFields constrainedFields = new ConstrainedFields(UserDto.class);
+
+        List<FieldDescriptor> userAccountsResponseFieldDescriptor =
+                this.getAllUsersResponseFieldDescriptor(constrainedFields);
+
+        this.mockMvc.perform(get("/users")
+                        .contentType(APPLICATION_JSON))
+                .andDo(document("list-users",
+                        responseFields(userAccountsResponseFieldDescriptor))
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id").isNotEmpty())
+                .andExpect(jsonPath("$.[0].name").isNotEmpty())
+                .andExpect(jsonPath("$.[0].lastname").isNotEmpty())
+                .andExpect(jsonPath("$.[0].age").isNotEmpty())
+                .andExpect(jsonPath("$.[0].email").isNotEmpty());
     }
 
     @Test
@@ -195,6 +211,16 @@ class UserControllerTest {
                 fields.withPath("[].id").type(String.class.getSimpleName()).description("User name").attributes(p),
                 fields.withPath("[].type").type(String.class.getSimpleName()).description("User name").attributes(p),
                 fields.withPath("[].number").type(String.class.getSimpleName()).description("User name").attributes(p));
+    }
+
+    private List<FieldDescriptor> getAllUsersResponseFieldDescriptor(ConstrainedFields fields) {
+        Attributes.Attribute p = new Attributes.Attribute("exampleValue", "34");
+        return Arrays.asList(
+                fields.withPath("[].id").type(String.class.getSimpleName()).description("User name").attributes(p),
+                fields.withPath("[].name").type(String.class.getSimpleName()).description("User name").attributes(p),
+                fields.withPath("[].lastname").type(String.class.getSimpleName()).description("User name").attributes(p),
+                fields.withPath("[].age").type(String.class.getSimpleName()).description("User name").attributes(p),
+                fields.withPath("[].email").type(String.class.getSimpleName()).description("User name").attributes(p));
     }
 
     static class ConstrainedFields {
