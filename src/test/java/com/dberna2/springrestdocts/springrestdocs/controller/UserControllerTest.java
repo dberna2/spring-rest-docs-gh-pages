@@ -23,17 +23,19 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.UriConfigurer.DEFAULT_PORT;
+import static org.springframework.restdocs.mockmvc.UriConfigurer.DEFAULT_SCHEME;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.snippet.Attributes.key;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -49,12 +51,18 @@ class UserControllerTest {
             WebApplicationContext webApplicationContext,
             RestDocumentationContextProvider restDocumentation
     ) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(documentationConfiguration(restDocumentation)
-                        .operationPreprocessors()
-                        .withRequestDefaults(prettyPrint())
-                        .withResponseDefaults(prettyPrint()))
-                .build();
+    this.mockMvc =
+        MockMvcBuilders.webAppContextSetup(webApplicationContext)
+            .apply(documentationConfiguration(restDocumentation)
+                    .uris()
+                    .withScheme(DEFAULT_SCHEME)
+                    .withHost("example.com")
+                    .withPort(DEFAULT_PORT)
+                    .and()
+                    .operationPreprocessors()
+                    .withRequestDefaults(prettyPrint())
+                    .withResponseDefaults(prettyPrint())
+            ).build();
     }
 
     @Test
@@ -66,20 +74,20 @@ class UserControllerTest {
         List<FieldDescriptor> responseFieldDescriptor = this.responseCreateUserFieldDescriptor(constrainedFields);
 
         UserDto user = new UserDto();
-        user.setName("David");
-        user.setLastname("Bernal");
-        user.setAge(31);
-        user.setEmail("leo.bernal1946@gmail.com");
+        user.setName("Max");
+        user.setLastname("Long");
+        user.setAge(39);
+        user.setEmail("max.long@gmail.com");
 
         this.mockMvc.perform(post("/users")
                         .contentType(APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(user)))
-                .andDo(
-                        document("create-user",
-                                requestFields(requestFieldDescriptor),
-                                responseFields(responseFieldDescriptor)
+                        .content(mapper.writeValueAsString(user))
+                ).andDo(document("create-user",
+                        requestFields(requestFieldDescriptor),
+                        responseFields(responseFieldDescriptor)
                 ))
                 .andExpect(status().isCreated())
+                .andExpect(header().exists(LOCATION))
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("$.name").value(user.getName()))
                 .andExpect(jsonPath("$.lastname").value(user.getLastname()))
