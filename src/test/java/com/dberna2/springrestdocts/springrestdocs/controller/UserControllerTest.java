@@ -148,7 +148,7 @@ class UserControllerTest {
 
         this.mockMvc.perform(delete("/users/{id}", 1)
                         .contentType(APPLICATION_JSON))
-                .andDo(document("delete-user-by-id",
+                .andDo(document("delete-user",
                         pathParameters(userPathParameterDescriptor))
                 )
                 .andExpect(status().isAccepted());

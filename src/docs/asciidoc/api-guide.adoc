@@ -230,3 +230,17 @@ include::{snippets}/update-user/http-request.adoc[]
 
 ==== Information Response Body
 include::{snippets}/update-user/response-body.adoc[]
+
+
+[[resources-delete-user]]
+=== **Delete User**
+A `DELETE` request will delete an existing user
+
+=== Path Parameters
+include::{snippets}/delete-user/path-parameters.adoc[]
+
+==== Example curl request
+include::{snippets}/delete-user/curl-request.adoc[]
+
+==== Example http request
+include::{snippets}/delete-user/http-request.adoc[]
