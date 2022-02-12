@@ -1,0 +1,232 @@
+= Guide API REST User Service
+User API
+:doctype: book
+:idprefix:
+:idseparator: -
+:toc: left
+:toclevels: 4
+:tabsize: 4
+:numbered:
+:sectanchors:
+:sectnums:
+:hide-uri-scheme:
+:docinfo: shared,private
+
+NOTE: This document contains the REST API documentation to consume the user service
+
+This documentation is for version {project-version}.
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+The services developed for the project try to comply with the HTTP and REST conventions in the use of verbs
+HTTP.
+
+[cols="1,3",options="header"]
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PUT`
+| Used to update a resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+
+The services developed for the project try to comply with the HTTP and REST conventions in the use of codes
+of HTTP status.
+
+[cols="1,3",options="header"]
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `401 Unauthorized`
+| The request resource is restricted. The requested resource is restricted and requires authentication
+
+| `404 Not Found`
+| The requested resource did not exist
+
+| `405 Method Not Allowed`
+| The requested method not supported
+
+| `415 Unsupported Media Type`
+| The Content type is empty or invalid
+
+| `422 Unprocessable Entity`
+| The resource already exist
+
+| `[red]#5XX# Server Error`
+| Unable to process the request
+|===
+
+[[overview-http-content-type]]
+== Headers
+Every response has the following header(s):
+
+[cols="1,3",options="header"]
+|===
+| Name | Description
+
+| `Content-Type`
+| The Content-Type of the payload, e.g. application/json
+|===
+
+[[overview-http-error-type]]
+== Errors
+Whenever an error response (status code >= 400) is returned, the body will contain a JSON object that describes the problem.
+The error object has the following structure:
+
+|===
+| Path | Type | Description
+
+|`timestamp`
+| Long
+| The time, in milliseconds, at which the error occurred
+
+|`status`
+| Number
+| The HTTP status code, e.g. 400
+
+|`exception`
+| String
+| The HTTP error that occurred, e.g. Bad Request
+
+|`messages`
+| String[]
+| A description of the cause of the error(s)
+
+|`path`
+| String
+| The path to which the request was made
+|===
+
+
+For example, a request that attempts to apply a non-existent tag to a note will produce a 400 Bad Request response:
+
+[source,http,options="nowrap"]
+----
+HTTP/1.1 404 Not found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 208
+
+{
+    "timestamp": 1588028874150,
+    "status": 404,
+    "exception": "NOT_FOUND",
+    "messages": [
+        "User found"
+    ],
+    "path": "/user/1"
+}
+----
+
+[[resources]]
+= Resources
+[[resources-user]]
+== **User**
+
+The user resource is used to find information from a user
+
+[[resources-user-info]]
+=== **Get User By Identifier**
+A `GET` request will get user Info
+
+=== Path Parameters
+include::{snippets}/get-by-id/path-parameters.adoc[]
+
+==== Example curl request
+include::{snippets}/get-by-id/curl-request.adoc[]
+
+==== Request
+include::{snippets}/get-by-id/http-request.adoc[]
+
+==== Information Response Fields
+include::{snippets}/get-by-id/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/get-by-id/http-response.adoc[]
+
+[[resources-user-account-info]]
+=== **Get User Accounts**
+A `GET` request will get user accounts Info
+
+=== Path Parameters
+include::{snippets}/get-accounts-by-id/path-parameters.adoc[]
+
+==== Example curl request
+include::{snippets}/get-accounts-by-id/curl-request.adoc[]
+
+==== Request
+include::{snippets}/get-accounts-by-id/http-request.adoc[]
+
+==== Information Response Fields
+include::{snippets}/get-accounts-by-id/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/get-accounts-by-id/http-response.adoc[]
+
+[[resources-create-user]]
+=== **Post Create User**
+A `POST` request will create a new user
+
+==== Request Fields
+include::{snippets}/create-user/request-fields.adoc[]
+
+==== Example curl request
+include::{snippets}/create-user/curl-request.adoc[]
+
+==== Example http request
+include::{snippets}/create-user/http-request.adoc[]
+
+==== Request Body
+include::{snippets}/create-user/request-body.adoc[]
+
+==== Information Response Fields
+include::{snippets}/create-user/response-fields.adoc[]
+
+==== Http Response
+include::{snippets}/create-user/http-response.adoc[]
+
+==== Response Body
+include::{snippets}/create-user/response-body.adoc[]
+
+[[resources-update-user]]
+=== **Put Update User**
+A `PUT` request will update an existing user
+
+=== Path Parameters
+include::{snippets}/update-user/path-parameters.adoc[]
+
+==== Request Fields
+include::{snippets}/update-user/request-fields.adoc[]
+
+==== Example curl request
+include::{snippets}/update-user/curl-request.adoc[]
+
+==== Example http request
+include::{snippets}/update-user/http-request.adoc[]
+
+==== Information Response Body
+include::{snippets}/update-user/response-body.adoc[]

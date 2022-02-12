@@ -7,3 +7,12 @@ CREATE TABLE users (
     email nvarchar(100) NOT NULL,
     PRIMARY KEY (id)
 );
+
+DROP TABLE IF EXISTS `accounts`;
+CREATE TABLE accounts (
+   id  int  NOT NULL AUTO_INCREMENT,
+   type VARCHAR(128) NOT NULL,
+   number VARCHAR(128) NOT NULL,
+   user_id int NOT NULL,
+   PRIMARY KEY (id)
+);

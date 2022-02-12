@@ -1,5 +1,6 @@
 package com.dberna2.springrestdocts.springrestdocs.controller;
 
+import com.dberna2.springrestdocts.springrestdocs.dto.AccountDto;
 import com.dberna2.springrestdocts.springrestdocs.dto.UserDto;
 import com.dberna2.springrestdocts.springrestdocs.service.UserService;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto newUser)  {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto newUser)  {
         UserDto user = userService.createUser(newUser);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(user.getId()).toUri();
@@ -35,6 +37,30 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable Integer id)  {
         UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping(value = "/{id}/accounts")
+    public ResponseEntity<AccountDto> createUserAccount(
+            @PathVariable Integer id,
+            @RequestBody @Valid AccountDto newUserAccount)  {
+        AccountDto account = userService.createUserAccount(id, newUserAccount);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(account.getId()).toUri();
+        return ResponseEntity.created(uri).body(account);
+    }
+
+    @GetMapping(value = "/{id}/accounts")
+    public ResponseEntity<List<AccountDto>> getUserAccounts(@PathVariable Integer id)  {
+        List<AccountDto> userAccounts = userService.getUserAccounts(id);
+        return ResponseEntity.ok(userAccounts);
+    }
+
+    @DeleteMapping(value = "/{id}/accounts/{accountId}")
+    public ResponseEntity<List<AccountDto>> deleteUserAccount(
+            @PathVariable("id") Integer id,
+            @PathVariable("accountId") Integer accountId)  {
+         userService.deleteUserAccount(id, accountId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping
