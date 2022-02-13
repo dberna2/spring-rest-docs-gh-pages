@@ -21,9 +21,11 @@
 		<spring-asciidoctor-backends.version>0.0.1-M1</spring-asciidoctor-backends.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<version.mapstruct-lombok>0.2.0</version.mapstruct-lombok>
-
 		<projectlombok-version>1.18.20</projectlombok-version>
 	</properties>
+	<scm>
+		<url>https://github.com/spring-projects/spring-boot</url>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -79,6 +81,12 @@
 			<artifactId>spring-restdocs-webtestclient</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.andreinc</groupId>
+			<artifactId>mockneat</artifactId>
+			<version>0.4.8</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -129,6 +137,7 @@
 							<attributes>
 								<snippets>${snippetsDirectory}</snippets>
 								<project-version>${project.version}</project-version>
+								<scm-url>${scm.url}</scm-url>
 							</attributes>
 							<sourceDirectory>src/docs/asciidoc</sourceDirectory>
 						</configuration>
