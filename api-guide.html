@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="author" content="The purpose of this service is to provide a basic functionality for managing users and their possible accounts.">
+<title>Guide API REST User Service</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script>
+    <script defer src="js/site.js"></script>
+</head>
+<body class="book toc2 toc-left"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Guide API REST User Service</h1>
+<div class="details">
+<span id="author" class="author">The purpose of this service is to provide a basic functionality for managing users and their possible accounts.</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel0">
+<li><a href="#overview">Overview</a>
+<ul class="sectlevel1">
+<li><a href="#overview-http-verbs">1. HTTP verbs</a></li>
+<li><a href="#overview-http-status-codes">2. HTTP status codes</a></li>
+<li><a href="#overview-http-content-type">3. Headers</a></li>
+<li><a href="#overview-http-error-type">4. Errors</a></li>
+<li><a href="#overview-service-error-type">5. Error types</a></li>
+</ul>
+</li>
+<li><a href="#resources">Resources</a>
+<ul class="sectlevel1">
+<li><a href="#resources-user">6. <strong>User</strong></a>
+<ul class="sectlevel2">
+<li><a href="#resources-user-info">6.1. <strong>Get User By Identifier</strong></a></li>
+<li><a href="#path-parameters">6.2. Path Parameters</a>
+<ul class="sectlevel3">
+<li><a href="#response-fields">6.2.1. Response Fields</a></li>
+<li><a href="#curl-request">6.2.2. Curl Request</a></li>
+<li><a href="#http-response">6.2.3. Http Response</a></li>
+</ul>
+</li>
+<li><a href="#resources-create-user">6.3. <strong>Post Create User</strong></a>
+<ul class="sectlevel3">
+<li><a href="#request-fields">6.3.1. Request Fields</a></li>
+<li><a href="#response-fields-2">6.3.2. Response Fields</a></li>
+<li><a href="#curl-request-2">6.3.3. Curl Request</a></li>
+<li><a href="#http-response-2">6.3.4. Http Response</a></li>
+</ul>
+</li>
+<li><a href="#resources-delete-user">6.4. <strong>Delete User</strong></a></li>
+<li><a href="#path-parameters-2">6.5. Path Parameters</a>
+<ul class="sectlevel3">
+<li><a href="#curl-request-3">6.5.1. Curl Request</a></li>
+<li><a href="#http-response-3">6.5.2. Http Response</a></li>
+</ul>
+</li>
+<li><a href="#resources-list-user">6.6. <strong>Get Users</strong></a>
+<ul class="sectlevel3">
+<li><a href="#curl-request-4">6.6.1. Curl Request</a></li>
+<li><a href="#response-fields-3">6.6.2. Response Fields</a></li>
+<li><a href="#http-response-4">6.6.3. Http Response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#resources-account">7. <strong>Account</strong></a>
+<ul class="sectlevel2">
+<li><a href="#resources-create-user-account">7.1. <strong>Post Create User Account</strong></a>
+<ul class="sectlevel3">
+<li><a href="#request-fields-2">7.1.1. Request Fields</a></li>
+<li><a href="#response-fields-4">7.1.2. Response Fields</a></li>
+<li><a href="#curl-request-5">7.1.3. Curl Request</a></li>
+<li><a href="#http-response-5">7.1.4. Http Response</a></li>
+</ul>
+</li>
+<li><a href="#resources-user-account-info">7.2. <strong>Get User Accounts</strong></a></li>
+<li><a href="#path-parameters-3">7.3. Path Parameters</a>
+<ul class="sectlevel3">
+<li><a href="#response-fields-5">7.3.1. Response Fields</a></li>
+<li><a href="#curl-request-6">7.3.2. Curl Request</a></li>
+<li><a href="#http-response-6">7.3.3. Http Response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="overview" class="sect0"><a class="anchor" href="#overview"></a>Overview</h1>
+<div class="openblock partintro">
+<div class="content">
+This document contains the documentation for the REST API to consume the human service.
+This documentation was built on top of version <em><strong>1.0.0-SNAPSHOT</strong></em> using Java version <strong>11</strong> and
+Spring Boot version <strong>2.6.1</strong>.
+You can see the source code here <em><strong><a href="https://github.com/dberna2/spring-rest-docs-gh-pages">github</a></strong></em>.
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-http-verbs"><a class="anchor" href="#overview-http-verbs"></a>1. HTTP verbs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The services developed for the project try to comply with the HTTP and REST conventions in the use of verbs
+HTTP.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Verb</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to retrieve an existing resource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to create a new resource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to update an existing resource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to delete an existing resource.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-http-status-codes"><a class="anchor" href="#overview-http-status-codes"></a>2. HTTP status codes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The services developed for the project try to comply with the HTTP and REST conventions in the use of codes
+of HTTP status.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status code</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>200 OK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request completed successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>201 Created</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new resource has been created successfully. The resource&#8217;s URI is available from the response&#8217;s.
+<code>Location</code> header.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>204 No Content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An update to an existing resource has been applied successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>400 Bad Request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request was malformed. The response body will include an error providing further information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>401 Unauthorized</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request resource is restricted. The requested resource is restricted and requires authentication.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>404 Not Found</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The requested resource does not exist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>405 Method Not Allowed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The requested method not supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>415 Unsupported Media Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Content type is empty or invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>422 Unprocessable Entity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource already exist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="red">5XX</span> Server Error</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal server error, the request cannot be processed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-http-content-type"><a class="anchor" href="#overview-http-content-type"></a>3. Headers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every response has the following header(s):</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Content-Type of the payload, default is <code>application/json</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-http-error-type"><a class="anchor" href="#overview-http-error-type"></a>4. Errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Whenever an error response (http status code &gt;= 400) is returned, the body will contain a JSON object that describes the problem.
+The error object has the following structure:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The time, in milliseconds, at which the error occurred.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP status code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP status code description.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A description of the cause of the error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path to which the request was made.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example, a request that attempts to apply a non-existent tag to a note will produce a 400 Bad Request response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-js" data-lang="js">HTTP/1.1 404 Not found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 295
+
+{
+    "timestamp": "2022-02-12T18:14:55.731+00:00",
+    "status": 404,
+    "error": "Not Found",
+    "message": "User not found",
+    "path": "/users/{id}"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-service-error-type"><a class="anchor" href="#overview-service-error-type"></a>5. Error types</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Status code</th>
+<th class="tableblock halign-left valign-top">Error message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AccountAlreadyExistException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">422</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account already exist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UserAlreadyExistException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">422</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User already exist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UserNotFoundException</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User not found.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h1 id="resources" class="sect0"><a class="anchor" href="#resources"></a>Resources</h1>
+<div class="sect1">
+<h2 id="resources-user"><a class="anchor" href="#resources-user"></a>6. <strong>User</strong></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>user</code> resource is used to manage information from a user.</p>
+</div>
+<div class="sect2">
+<h3 id="resources-user-info"><a class="anchor" href="#resources-user-info"></a>6.1. <strong>Get User By Identifier</strong></h3>
+<div class="paragraph">
+<p>A <code>GET</code> request will get user Info.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="path-parameters"><a class="anchor" href="#path-parameters"></a>6.2. Path Parameters</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /users/{id}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="response-fields"><a class="anchor" href="#response-fields"></a>6.2.1. Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lastname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User lastname</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">age</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User age</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accounts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Related user accounts</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="curl-request"><a class="anchor" href="#curl-request"></a>6.2.2. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users/1' -i -X GET \
+    -H 'Content-Type: application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-response"><a class="anchor" href="#http-response"></a>6.2.3. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 113
+
+{
+  "id" : 1,
+  "name" : "David",
+  "lastname" : "Bernal",
+  "age" : 31,
+  "email" : "leo.bernal1946@gmail.com"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-create-user"><a class="anchor" href="#resources-create-user"></a>6.3. <strong>Post Create User</strong></h3>
+<div class="paragraph">
+<p>A <code>POST</code> request will create a new user.</p>
+</div>
+<div class="sect3">
+<h4 id="request-fields"><a class="anchor" href="#request-fields"></a>6.3.1. Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-left valign-top">Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trinidad</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lastname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User lastname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rivas</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">age</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User age</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">34</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be a well-formed email address- Must not be null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:mail@example.com">mail@example.com</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accounts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Related user accounts</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-fields-2"><a class="anchor" href="#response-fields-2"></a>6.3.2. Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lastname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User lastname</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">age</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User age</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accounts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="curl-request-2"><a class="anchor" href="#curl-request-2"></a>6.3.3. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "name" : "Andy",
+  "lastname" : "Jackson",
+  "age" : 40,
+  "email" : "email@example.com"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-response-2"><a class="anchor" href="#http-response-2"></a>6.3.4. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
+Location: http://example.com:8080/users/2
+Content-Type: application/json
+Content-Length: 106
+
+{
+  "id" : 2,
+  "name" : "Andy",
+  "lastname" : "Jackson",
+  "age" : 40,
+  "email" : "email@example.com"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-delete-user"><a class="anchor" href="#resources-delete-user"></a>6.4. <strong>Delete User</strong></h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request will delete an existing user.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="path-parameters-2"><a class="anchor" href="#path-parameters-2"></a>6.5. Path Parameters</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /users/{id}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="curl-request-3"><a class="anchor" href="#curl-request-3"></a>6.5.1. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users/1' -i -X DELETE \
+    -H 'Content-Type: application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-response-3"><a class="anchor" href="#http-response-3"></a>6.5.2. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 202 Accepted</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-list-user"><a class="anchor" href="#resources-list-user"></a>6.6. <strong>Get Users</strong></h3>
+<div class="paragraph">
+<p>A <code>GET</code> request will get all existing users.</p>
+</div>
+<div class="sect3">
+<h4 id="curl-request-4"><a class="anchor" href="#curl-request-4"></a>6.6.1. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users' -i -X GET \
+    -H 'Content-Type: application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="response-fields-3"><a class="anchor" href="#response-fields-3"></a>6.6.2. Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].lastname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User lastname</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].age</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User age</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].accounts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User email</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="http-response-4"><a class="anchor" href="#http-response-4"></a>6.6.3. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 117
+
+[ {
+  "id" : 1,
+  "name" : "David",
+  "lastname" : "Bernal",
+  "age" : 31,
+  "email" : "leo.bernal1946@gmail.com"
+} ]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources-account"><a class="anchor" href="#resources-account"></a>7. <strong>Account</strong></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="resources-create-user-account"><a class="anchor" href="#resources-create-user-account"></a>7.1. <strong>Post Create User Account</strong></h3>
+<div class="paragraph">
+<p>A <code>POST</code> request will create a new user account.</p>
+</div>
+<div class="sect3">
+<h4 id="request-fields-2"><a class="anchor" href="#request-fields-2"></a>7.1.1. Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-left valign-top">Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account type</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEBIT, CREDIT</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be null- Size must be between 16 and 16 inclusive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4909914807265711</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">balance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account balance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be positive or zero</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$8,933.95</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-fields-4"><a class="anchor" href="#response-fields-4"></a>7.1.2. Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">balance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account balance</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="curl-request-5"><a class="anchor" href="#curl-request-5"></a>7.1.3. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users/1/accounts' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "type" : "DEBIT",
+  "number" : "4909914807265711"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-response-5"><a class="anchor" href="#http-response-5"></a>7.1.4. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
+Location: http://example.com:8080/users/1/accounts/2
+Content-Type: application/json
+Content-Length: 67
+
+{
+  "id" : 2,
+  "type" : "DEBIT",
+  "number" : "4909914807265711"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-user-account-info"><a class="anchor" href="#resources-user-account-info"></a>7.2. <strong>Get User Accounts</strong></h3>
+<div class="paragraph">
+<p>A <code>GET</code> request will get user accounts Info.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="path-parameters-3"><a class="anchor" href="#path-parameters-3"></a>7.3. Path Parameters</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /users/{id}/accounts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User identifier</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="response-fields-5"><a class="anchor" href="#response-fields-5"></a>7.3.1. Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account number</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].balance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account balance</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="curl-request-6"><a class="anchor" href="#curl-request-6"></a>7.3.2. Curl Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://example.com:8080/users/1/accounts' -i -X GET \
+    -H 'Content-Type: application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-response-6"><a class="anchor" href="#http-response-6"></a>7.3.3. Http Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 94
+
+[ {
+  "id" : 1,
+  "type" : "DEBIT",
+  "number" : "4909914807265710",
+  "balance" : 8933.95
+} ]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-03-01 20:51:10 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>
