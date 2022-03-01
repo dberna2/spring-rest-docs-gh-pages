@@ -25,7 +25,22 @@ jobs:
       - name: maven-settings-xml-action
         uses: whelk-io/maven-settings-xml-action@v20
         with:
-          repositories: '[{ "id": "springframework-repository", "url": "https://maven.springframework.org/milestone" }]'
+          repositories: >
+            [
+              {
+                "id": "springframework-repository",
+                "name": "springframework-repository",
+                "url": "https://maven.springframework.org/milestone"
+              }
+            ]
+          plugin_repositories: >
+            [
+              {
+                "id": "spring.milestone",
+                "name": "spring.milestone",
+                "url": "https://repo.spring.io/ui/native/milestone"
+              }
+            ]
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
