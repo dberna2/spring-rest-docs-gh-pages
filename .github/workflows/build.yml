@@ -36,9 +36,9 @@ jobs:
           plugin_repositories: >
             [
               {
-                "id": "spring.milestone",
+                "id": "repository.spring.release",
                 "name": "spring.milestone",
-                "url": "https://repo.spring.io/ui/native/milestone"
+                "url": "https://repo.spring.io/plugins-release"
               }
             ]
           path: ~/.m2/repository
