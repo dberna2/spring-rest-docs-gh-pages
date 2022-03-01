@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: "Build with ${{ matrix.java }}"
+    name: "Build api doc"
     strategy:
       matrix:
         java: [ 11 ]
@@ -22,9 +22,10 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v20
         with:
+          repositories: '[{ "id": "springframework-repository", "url": "https://maven.springframework.org/milestone" }]'
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
