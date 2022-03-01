@@ -18,5 +18,5 @@ public interface UserMapper {
     AccountDto mapToAccountDto(Account account);
 
     @Mapping(source = "userId", target = "user.id")
-    Account mapToAccountEntity(Integer userId, AccountDto account);
+    Account mapToAccountEntity(Long userId, AccountDto account);
 }

@@ -13,6 +13,7 @@ CREATE TABLE accounts (
    id  int  NOT NULL AUTO_INCREMENT,
    type VARCHAR(128) NOT NULL,
    number VARCHAR(128) NOT NULL,
+   balance decimal(6, 2),
    user_id int NOT NULL,
    PRIMARY KEY (id)
 );

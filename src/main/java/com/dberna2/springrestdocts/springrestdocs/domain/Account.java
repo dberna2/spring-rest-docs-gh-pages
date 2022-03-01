@@ -3,6 +3,7 @@ package com.dberna2.springrestdocts.springrestdocs.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -14,6 +15,7 @@ public class Account {
     private Integer id;
     private String type;
     private String number;
+    private BigDecimal balance;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

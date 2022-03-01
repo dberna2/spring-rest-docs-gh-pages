@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: @project.name@
   h2:
     console:
       enabled: true
@@ -16,6 +18,8 @@ spring:
     init:
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
+  jackson:
+    default-property-inclusion: non_absent
 
 server:
   error:

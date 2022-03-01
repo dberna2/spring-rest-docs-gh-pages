@@ -11,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -34,14 +33,14 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id)  {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id)  {
         UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping(value = "/{id}/accounts")
     public ResponseEntity<AccountDto> createUserAccount(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @RequestBody @Valid AccountDto newUserAccount)  {
         AccountDto account = userService.createUserAccount(id, newUserAccount);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -50,15 +49,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/accounts")
-    public ResponseEntity<List<AccountDto>> getUserAccounts(@PathVariable Integer id)  {
+    public ResponseEntity<List<AccountDto>> getUserAccounts(@PathVariable Long id)  {
         List<AccountDto> userAccounts = userService.getUserAccounts(id);
         return ResponseEntity.ok(userAccounts);
     }
 
     @DeleteMapping(value = "/{id}/accounts/{accountId}")
     public ResponseEntity<List<AccountDto>> deleteUserAccount(
-            @PathVariable("id") Integer id,
-            @PathVariable("accountId") Integer accountId)  {
+            @PathVariable("id") Long id,
+            @PathVariable("accountId") Long accountId)  {
          userService.deleteUserAccount(id, accountId);
         return ResponseEntity.accepted().build();
     }
@@ -70,7 +69,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<List<UserDto>> deleteUserById(@PathVariable Integer id)  {
+    public ResponseEntity<List<UserDto>> deleteUserById(@PathVariable Long id)  {
         userService.deleteUserById(id);
         return ResponseEntity.accepted().build();
     }

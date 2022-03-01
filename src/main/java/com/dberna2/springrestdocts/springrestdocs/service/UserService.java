@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto getUserById(Integer id);
+    UserDto getUserById(Long id);
 
     List<UserDto> getAllUsers();
 
     UserDto createUser(UserDto newUser);
 
-    void deleteUserById(Integer id);
+    void deleteUserById(Long id);
 
-    List<AccountDto> getUserAccounts(Integer id);
+    List<AccountDto> getUserAccounts(Long id);
 
-    AccountDto createUserAccount(Integer id, AccountDto newUserAccount);
+    AccountDto createUserAccount(Long id, AccountDto newUserAccount);
 
-    void deleteUserAccount(Integer id, Integer accountId);
+    void deleteUserAccount(Long id, Long accountId);
 }
