@@ -47,6 +47,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class UserControllerTest {
 
+    public static final String DELIMITER = ", ";
+    public static final String EXAMPLE_KEY_VALUE = "exampleValue";
     @Autowired
     private ObjectMapper mapper;
 
@@ -271,8 +273,8 @@ class UserControllerTest {
             ConstrainedFields fields,
             String... exampleValues
     ) {
-        String exampleValue = String.join(", ", exampleValues);
-        Attributes.Attribute attribute = new Attributes.Attribute("exampleValue", exampleValue);
+        String exampleValue = String.join(DELIMITER, exampleValues);
+        Attributes.Attribute attribute = new Attributes.Attribute(EXAMPLE_KEY_VALUE, exampleValue);
         FieldDescriptor fieldDescriptor = fields
                 .withPath(name)
                 .type(type)
