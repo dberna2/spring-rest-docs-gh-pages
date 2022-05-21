@@ -18,38 +18,41 @@ import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 
 public class AccountDtoMother {
 
-    private static final ConstrainedFields fields = new ConstrainedFields(AccountDto.class);
+  private static final ConstrainedFields fields = new ConstrainedFields(AccountDto.class);
 
-    public static ParameterDescriptor buildGetUserIdentifierPathParameters() {
-        Attributes.Attribute attribute = new Attributes.Attribute("exampleValue", "1");
-        return fields.withPathParameter("id").description("User identifier").attributes(attribute);
-    }
+  public static AccountDto create() {
+    AccountDto accountToCreate = new AccountDto();
+    accountToCreate.setNumber("4909914807265711");
+    accountToCreate.setType(DEBIT);
+    return accountToCreate;
+  }
 
-    public static List<FieldDescriptor> buildGetUserAccountsResponseFields() {
-        return Arrays.asList(
-                buildField("[].id", NUMBER,"Account identifier", TRUE, fields),
-                buildField("[].type", STRING,"Account type", TRUE, fields),
-                buildField("[].number", STRING,"Account number", TRUE, fields),
-                buildField("[].balance", NUMBER,"Account balance", FALSE, fields)
-        );
-    }
+  public static ParameterDescriptor buildGetUserIdentifierPathParameters() {
+    Attributes.Attribute attribute = new Attributes.Attribute("exampleValue", "1");
+    return fields.withPathParameter("id").description("User identifier").attributes(attribute);
+  }
 
-    public static List<FieldDescriptor> buildCreateUserAccountsRequestFields() {
-        return Arrays.asList(
-                buildField("id", STRING,"Account type", FALSE, fields, "-"),
-                buildField("type", STRING,"Account type", TRUE, fields, DEBIT.name(), CREDIT.name()),
-                buildField("number", STRING,"Account number", TRUE, fields, "4909914807265711"),
-                buildField("balance", NUMBER,"Account balance", FALSE, fields,"$8,933.95")
-        );
-    }
+  public static List<FieldDescriptor> buildGetUserAccountsResponseFields() {
+    return Arrays.asList(
+        buildField("[].id", NUMBER, "Account identifier", TRUE, fields),
+        buildField("[].type", STRING, "Account type", TRUE, fields),
+        buildField("[].number", STRING, "Account number", TRUE, fields),
+        buildField("[].balance", NUMBER, "Account balance", FALSE, fields));
+  }
 
-    public static List<FieldDescriptor> buildCreateUserAccountsResponseFields() {
-        return Arrays.asList(
-                buildField("id", NUMBER,"Account identifier", TRUE, fields),
-                buildField("type", STRING,"Account type", TRUE, fields),
-                buildField("number", STRING,"Account number", TRUE, fields),
-                buildField("balance", NUMBER,"Account balance", FALSE, fields)
-        );
-    }
+  public static List<FieldDescriptor> buildCreateUserAccountsRequestFields() {
+    return Arrays.asList(
+        buildField("id", STRING, "Account type", FALSE, fields, "-"),
+        buildField("type", STRING, "Account type", TRUE, fields, DEBIT.name(), CREDIT.name()),
+        buildField("number", STRING, "Account number", TRUE, fields, "4909914807265711"),
+        buildField("balance", NUMBER, "Account balance", FALSE, fields, "$8,933.95"));
+  }
 
+  public static List<FieldDescriptor> buildCreateUserAccountsResponseFields() {
+    return Arrays.asList(
+        buildField("id", NUMBER, "Account identifier", TRUE, fields),
+        buildField("type", STRING, "Account type", TRUE, fields),
+        buildField("number", STRING, "Account number", TRUE, fields),
+        buildField("balance", NUMBER, "Account balance", FALSE, fields));
+  }
 }
