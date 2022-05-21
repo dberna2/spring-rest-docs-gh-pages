@@ -622,12 +622,12 @@ Content-Length: 113
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Location: http://example.com:8080/users/2
+Location: http://example.com:8080/users/3
 Content-Type: application/json
 Content-Length: 106
 
 {
-  "id" : 2,
+  "id" : 3,
   "name" : "Andy",
   "lastname" : "Jackson",
   "age" : 40,
@@ -759,7 +759,7 @@ Content-Length: 106
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 117
+Content-Length: 228
 
 [ {
   "id" : 1,
@@ -767,6 +767,12 @@ Content-Length: 117
   "lastname" : "Bernal",
   "age" : 31,
   "email" : "leo.bernal1946@gmail.com"
+}, {
+  "id" : 2,
+  "name" : "Oscar",
+  "lastname" : "Smith",
+  "age" : 31,
+  "email" : "oscar.smith@gmail.com"
 } ]</code></pre>
 </div>
 </div>
@@ -902,12 +908,12 @@ Content-Length: 117
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Location: http://example.com:8080/users/1/accounts/2
+Location: http://example.com:8080/users/1/accounts/3
 Content-Type: application/json
 Content-Length: 67
 
 {
-  "id" : 2,
+  "id" : 3,
   "type" : "DEBIT",
   "number" : "4909914807265711"
 }</code></pre>
@@ -1002,13 +1008,17 @@ Content-Length: 67
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 94
+Content-Length: 163
 
 [ {
   "id" : 1,
   "type" : "DEBIT",
   "number" : "4909914807265710",
   "balance" : 8933.95
+}, {
+  "id" : 3,
+  "type" : "DEBIT",
+  "number" : "4909914807265711"
 } ]</code></pre>
 </div>
 </div>
@@ -1019,7 +1029,7 @@ Content-Length: 94
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-03-02 19:25:01 UTC
+Last updated 2022-05-21 09:25:35 UTC
 </div>
 </div>
 </div>
